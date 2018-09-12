@@ -14,6 +14,6 @@
 $app->get('/', function () use ($app) {
     return $app->version();
 });
-
+$app->post('/login','LoginController@index');
 
 $app->get('/users',['uses'=>'UsersController@index']);

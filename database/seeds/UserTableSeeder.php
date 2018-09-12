@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Role;
 
@@ -20,7 +21,7 @@ class UserTableSeeder extends Seeder
         $usuario->name='Administrador Principal';
         $usuario->email='admin@hseqperusac.com';
         $usuario->username='admin';
-        $usuario->password=bcrypt('admin123');
+        $usuario->password=Hash::make('admin123');
         $usuario->role_id=$role_root->id;
         $usuario->api_token=str_random(60);
         $usuario->status=1;

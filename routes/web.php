@@ -14,6 +14,11 @@
 $app->get('/', function () use ($app) {
     return $app->version();
 });
+//acceso
 $app->post('/login','LoginController@index');
 
+
+//Usuarios
 $app->get('/users',['uses'=>'UsersController@index']);
+
+//Galerias

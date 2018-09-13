@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Banner;
 
-class UsersController extends Controller
+class BannersController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -17,9 +17,9 @@ class UsersController extends Controller
     }
 
     public function index(){
-        $users=User::all();
-        return $users;
+        $banners=Banner::all();
+        return $banners;
     }
 
-
+    //
 }

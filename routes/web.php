@@ -12,7 +12,7 @@
 */
 
 $app->get('/', function () use ($app) {
-    return $app->version();
+    return 'Gracias';
 });
 //acceso
 $app->post('/login','LoginController@index');
@@ -22,3 +22,11 @@ $app->post('/login','LoginController@index');
 $app->get('/users',['uses'=>'UsersController@index']);
 
 //Galerias
+
+
+//Cursos
+$app->get('/cursos', 'CursosController@index');
+$app->post('/curso', 'CursosController@create');
+$app->get('/curso/{id}', 'CursosController@show');
+$app->put('/curso/{id}', 'CursosController@update');
+$app->delete('/curso/{id}', 'CursosController@destroy');

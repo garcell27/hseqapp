@@ -23,10 +23,16 @@ class CursosController extends Controller
 
     public function create(Request $request){
         $curso= new Curso();
-
+        $curso->save();
+        return $curso;
     }
     public function show($id){
         $curso=Curso::find($id);
+        return $curso;
+    }
+    public function update($id){
+        $curso=Curso::find($id);
+        $curso->save();
         return $curso;
     }
     public function destroy($id){

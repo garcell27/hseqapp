@@ -30,3 +30,6 @@ $app->post('/curso', 'CursosController@create');
 $app->get('/curso/{id}', 'CursosController@show');
 $app->put('/curso/{id}', 'CursosController@update');
 $app->delete('/curso/{id}', 'CursosController@destroy');
+
+// Monedas
+$app->get('/monedas', 'MonedasController@index');

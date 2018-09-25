@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Banner;
+use Illuminate\Http\Request;
 
 class BannersController extends Controller
 {
@@ -21,5 +22,26 @@ class BannersController extends Controller
         return $banners;
     }
 
-    //
+    public function create(Request $request){
+        $banner=new Banner();
+        $banner->save();
+        return $banner;
+    }
+
+    public function show($id){
+        $banner=Banner::find($id);
+        return $banner;
+    }
+    public function update($id){
+        $banner=Banner::find($id);
+        $banner->save();
+        return $banner;
+    }
+    public function destroy($id){
+        $banner=Banner::find($id);
+        $banner->delete();
+    }
+
+
+
 }

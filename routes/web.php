@@ -31,5 +31,12 @@ $app->get('/curso/{id}', 'CursosController@show');
 $app->put('/curso/{id}', 'CursosController@update');
 $app->delete('/curso/{id}', 'CursosController@destroy');
 
+//Banners
+$app->get('/banners', 'BannersController@index');
+$app->post('/banner', 'BannersController@create');
+$app->get('/banner/{id}', 'BannersController@show');
+$app->put('/banner/{id}', 'BannersController@update');
+$app->delete('/banner/{id}', 'BannersController@destroy');
+
 // Monedas
 $app->get('/monedas', 'MonedasController@index');

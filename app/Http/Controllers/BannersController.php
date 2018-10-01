@@ -12,6 +12,7 @@ class BannersController extends Controller
      *
      * @return void
      */
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -24,8 +25,24 @@ class BannersController extends Controller
 
     public function create(Request $request){
         $banner=new Banner();
-        $banner->save();
-        return $banner;
+        if($request->hasFile('banner')){
+            $nbanner=Banner::all()->count();
+            $usuario=$request->user();
+            $imgbanner=$request->file('banner');
+            $nombre=time().'.'.$imgbanner->getClientOriginalExtension();
+            $destinationPath = storage_path('../img/banners');
+            $imgbanner->move($destinationPath,$nombre);
+            $banner->nombreurl='http://localhost/hseqapp/img/banners/'.$nombre;
+            $banner->titulo=$request->input('titulo');
+            $banner->detalle=$request->input('detalle');
+            $banner->orden=$nbanner+1;
+            $banner->creador=$usuario->id;
+            $banner->actualizador=$usuario->id;
+            $banner->save();
+            return $banner;
+        }
+        //$banner->save();
+        //return $banner;
     }
 
     public function show($id){
@@ -34,7 +51,8 @@ class BannersController extends Controller
     }
     public function update($id){
         $banner=Banner::find($id);
-        $banner->save();
+
+        //$banner->save();
         return $banner;
     }
     public function destroy($id){

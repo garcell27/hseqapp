@@ -17,7 +17,6 @@ $app->get('/', function () use ($app) {
 //acceso
 $app->post('/login','LoginController@index');
 
-
 //Usuarios
 $app->get('/users',['uses'=>'UsersController@index']);
 

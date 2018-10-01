@@ -29,7 +29,7 @@ class BannersController extends Controller
             $nbanner=Banner::all()->count();
             $usuario=$request->user();
             $imgbanner=$request->file('banner');
-            $nombre=time().'.'.$imgbanner->getClientOriginalExtension();
+            $nombre='banner_'.time().'.'.$imgbanner->getClientOriginalExtension();
             $destinationPath = storage_path('../img/banners');
             $imgbanner->move($destinationPath,$nombre);
             $banner->nombreurl='http://localhost/hseqapp/img/banners/'.$nombre;

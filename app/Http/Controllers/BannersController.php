@@ -19,7 +19,7 @@ class BannersController extends Controller
     }
 
     public function index(){
-        $banners=Banner::all();
+        $banners=Banner::orderBy('orden')->get();
         return $banners;
     }
 
@@ -58,6 +58,21 @@ class BannersController extends Controller
     public function destroy($id){
         $banner=Banner::find($id);
         $banner->delete();
+    }
+
+    public function orden(Request $request){
+        $idini=$request->input('idini');
+        $idfin=$request->input('idfin');
+        $bannerini=Banner::find($idini);
+        $bannerfin=Banner::find($idfin);
+        $ordenini=$bannerini->orden;
+        $ordenfin=$bannerfin->orden;
+        $bannerini->orden=$ordenfin;
+        $bannerfin->orden=$ordenini;
+        $bannerini->save();
+        $bannerfin->save();
+        $banners=Banner::orderBy('orden')->get();
+        return $banners;
     }
 
 

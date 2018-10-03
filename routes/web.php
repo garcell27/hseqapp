@@ -37,6 +37,6 @@ $app->post('/banner', 'BannersController@create');
 $app->get('/banner/{id}', 'BannersController@show');
 $app->put('/banner/{id}', 'BannersController@update');
 $app->delete('/banner/{id}', 'BannersController@destroy');
-
+$app->post('/banner/orden', 'BannersController@orden');
 // Monedas
 $app->get('/monedas', 'MonedasController@index');

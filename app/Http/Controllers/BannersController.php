@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Banner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BannersController extends Controller
 {
@@ -41,8 +42,7 @@ class BannersController extends Controller
             $banner->save();
             return $banner;
         }
-        //$banner->save();
-        //return $banner;
+
     }
 
     public function show($id){
@@ -55,9 +55,20 @@ class BannersController extends Controller
         //$banner->save();
         return $banner;
     }
+
+    /**
+     * @param $id
+     * @return string
+     * @throws \Exception
+     */
     public function destroy($id){
         $banner=Banner::find($id);
+        $num=strlen('http://localhost/hseqapp/img/banners/');
+        $file= substr($banner->nombreurl,$num);
+        //unlink(storage_path('../img/banners'.$file));
+        Storage::delete('../img/banners'.$file);
         $banner->delete();
+        return 'ok';
     }
 
     public function orden(Request $request){

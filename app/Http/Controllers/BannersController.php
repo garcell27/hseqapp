@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Banner;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+
 
 class BannersController extends Controller
 {
@@ -17,7 +18,7 @@ class BannersController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->almacenamiento=storage_path('../img/banners');
+        $this->almacenamiento=storage_path('../img/banners/');
     }
 
     public function index(){
@@ -32,12 +33,13 @@ class BannersController extends Controller
             $usuario=$request->user();
             $imgbanner=$request->file('banner');
             $nombre='banner_'.time().'.'.$imgbanner->getClientOriginalExtension();
-            $imgbanner->move($this->almacenamiento.'/temp',$nombre);
+            //$imgbanner->move($this->almacenamiento.'temp',$nombre);
+            $manager= new ImageManager(array('driver'=>'gd'));
+            $img=$manager->make($imgbanner)->resize(1280,500)->save($this->almacenamiento.$nombre);
             $banner->nombreurl=$nombre;
             $banner->titulo='';
             $banner->detalle='';
             $banner->orden=$nbanner+1;
-            $banner->estado=0;
             $banner->creador=$usuario->id;
             $banner->actualizador=$usuario->id;
             $banner->save();
@@ -47,9 +49,6 @@ class BannersController extends Controller
     }
     public function show($id){
         $banner=Banner::find($id);
-        if($banner->estado==0){
-            
-        }
         return $banner;
     }
     public function update($id){
@@ -66,11 +65,15 @@ class BannersController extends Controller
      */
     public function destroy($id){
         $banner=Banner::find($id);
-        $num=strlen('http://localhost/hseqapp/img/banners/');
-        $file= substr($banner->nombreurl,$num);
-        unlink(storage_path('../img/banners/'.$file));
+        $orden=$banner->orden;
+        unlink(storage_path('../img/banners/'.$banner->nombreurl));
         //Storage::delete('../img/banners'.$file);
         $banner->delete();
+        $bannerSigs=Banner::where('orden','>',$orden)->get();
+        foreach ($bannerSigs as $b){
+            $b->orden--;
+            $b->save();
+        }
         return 'ok';
     }
 

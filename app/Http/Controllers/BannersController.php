@@ -13,10 +13,11 @@ class BannersController extends Controller
      *
      * @return void
      */
-
+    public $almacenamiento;
     public function __construct()
     {
         $this->middleware('auth');
+        $this->almacenamiento=storage_path('../img/banners');
     }
 
     public function index(){
@@ -30,13 +31,13 @@ class BannersController extends Controller
             $nbanner=Banner::all()->count();
             $usuario=$request->user();
             $imgbanner=$request->file('banner');
-            $nombre=time().'.'.$imgbanner->getClientOriginalExtension();
-            $destinationPath = storage_path('../img/banners');
-            $imgbanner->move($destinationPath,$nombre);
-            $banner->nombreurl='http://localhost/hseqapp/img/banners/'.$nombre;
-            $banner->titulo=$request->input('titulo');
-            $banner->detalle=$request->input('detalle');
+            $nombre='banner_'.time().'.'.$imgbanner->getClientOriginalExtension();
+            $imgbanner->move($this->almacenamiento.'/temp',$nombre);
+            $banner->nombreurl=$nombre;
+            $banner->titulo='';
+            $banner->detalle='';
             $banner->orden=$nbanner+1;
+            $banner->estado=0;
             $banner->creador=$usuario->id;
             $banner->actualizador=$usuario->id;
             $banner->save();
@@ -44,9 +45,11 @@ class BannersController extends Controller
         }
 
     }
-
     public function show($id){
         $banner=Banner::find($id);
+        if($banner->estado==0){
+            
+        }
         return $banner;
     }
     public function update($id){
@@ -65,8 +68,8 @@ class BannersController extends Controller
         $banner=Banner::find($id);
         $num=strlen('http://localhost/hseqapp/img/banners/');
         $file= substr($banner->nombreurl,$num);
-        //unlink(storage_path('../img/banners'.$file));
-        Storage::delete('../img/banners'.$file);
+        unlink(storage_path('../img/banners/'.$file));
+        //Storage::delete('../img/banners'.$file);
         $banner->delete();
         return 'ok';
     }

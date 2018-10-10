@@ -51,10 +51,11 @@ class BannersController extends Controller
         $banner=Banner::find($id);
         return $banner;
     }
-    public function update($id){
+    public function update($id,Request $request){
         $banner=Banner::find($id);
-
-        //$banner->save();
+        $banner->titulo=$request->input('titulo');
+        $banner->detalle=$request->input('detalle');
+        $banner->save();
         return $banner;
     }
 

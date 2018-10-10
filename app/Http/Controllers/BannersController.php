@@ -47,6 +47,7 @@ class BannersController extends Controller
         }
 
     }
+
     public function show($id){
         $banner=Banner::find($id);
         return $banner;

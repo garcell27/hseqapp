@@ -37,5 +37,12 @@ $app->get('/banner/{id}', 'BannersController@show');
 $app->put('/banner/{id}', 'BannersController@update');
 $app->delete('/banner/{id}', 'BannersController@destroy');
 $app->post('/banner/orden', 'BannersController@orden');
+//Galerias
+$app->get('/galerias', 'GaleriasController@index');
+$app->post('/galeria', 'GaleriasController@create');
+$app->put('/galeria/{id}', 'GaleriasController@update');
+$app->delete('/galeria/{id}', 'GaleriasController@destroy');
+
+
 // Monedas
 $app->get('/monedas', 'MonedasController@index');
